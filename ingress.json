@@ -1,0 +1,118 @@
+{
+  "services": [
+    {
+      "name": "svc_lb_igc_public",
+      "namespace": "cluster-ingress",
+      "type": "LoadBalancer",
+      "externalIP": "50.50.50.50",
+      "selector": {
+        "app": "igc_internet"
+      },
+      "annotations": {
+        "exposure": "internet"
+      }
+    },
+
+    {
+      "name": "svc_lb_igc_internal",
+      "namespace": "cluster-ingress",
+      "type": "LoadBalancer",
+      "externalIP": "172.19.4.4",
+      "selector": {
+        "app": "igc_intranet"
+      },
+      "annotations": {
+        "exposure": "intranet"
+      }
+    },
+
+    {
+      "name": "svc_public_app_1",
+      "namespace": "public_app",
+      "type": "ClusterIP",
+      "externalIP": "50.50.50.50",
+      "selector": {
+        "app": "public_app_1"
+      },
+      "annotations": {
+        "exposure": "internet"
+      }
+    },
+
+    {
+      "name": "svc_private_app_1",
+      "namespace": "private_app",
+      "type": "ClusterIP",
+      "externalIP": "192.168.0.200",
+      "selector": {
+        "app": "private_app_1"
+      },
+      "annotations": {
+        "exposure": "intranet"
+      }
+    }
+  ],
+
+  "pods": [
+    {
+      "name": "igc_internet",
+      "namespace": "cluster-ingress",
+      "labels": {
+        "app": "igc_internet"
+      },
+      "annotations": {
+        "exposure": "internet"
+      },
+      "ingressClass": "public_facing"
+    },
+
+    {
+      "name": "igc_intranet",
+      "namespace": "cluster-ingress",
+      "labels": {
+        "app": "igc_intranet"
+      },
+      "annotations": {
+        "exposure": "intranet"
+      },
+      "ingressClass": "private_facing"
+    },
+
+    {
+      "name": "public_app_1",
+      "namespace": "public_app",
+      "labels": {
+        "app": "public_app_1"
+      },
+      "annotations": {
+        "exposure": "internet"
+      }
+    },
+
+    {
+      "name": "private_app_1",
+      "namespace": "private_app",
+      "labels": {
+        "app": "private_app_1"
+      },
+      "annotations": {
+        "exposure": "intranet"
+      }
+    }
+  ],
+
+  "ingresses": [
+    {
+      "name": "ingress_for_public_app",
+      "namespace": "public_app",
+      "ingressClass": "public_facing",
+      "serviceName": "svc_public_app_1"
+    },
+    {
+      "name": "ingress_for_private_app",
+      "namespace": "private_app",
+      "ingressClass": "private_facing",
+      "serviceName": "svc_private_app_1"
+    }
+  ]
+}

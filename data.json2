@@ -1,0 +1,42 @@
+{
+  "services": [
+    {
+      "name": "svc_cip_for_pod",
+      "note": "This is a simple ClusterIP service that points to Pod",
+      "namespace": "test",
+      "type": "ClusterIP",
+      "selector": {
+        "app": "test_pod_1"
+      },
+      "annotations": {
+        "exposure": "cluster"
+      }
+    },
+
+    {
+      "name": "svc_nodeport_for_port",
+      "note": "This is a simple NodePort service that points to the same pod as the svc_cip_for_pod",
+      "namespace": "test",
+      "type": "NodePort",
+      "portNumber": 12345,
+      "selector": {
+        "app": "test_pod_1"
+      },
+      "annotations": {
+        "exposure": "intranet"
+      }
+    }
+  ],
+
+  "pods": [
+    {
+      "name": "test_pod_1",
+      "namespace": "test",
+      "labels": {
+        "app": "test_pod_1"
+      }
+    }
+
+  ]
+}
+
