@@ -32,6 +32,7 @@ servicePods[servicePod] {
 }
 
 # This detects services that have an exposure level of internet but point to pods with an exposure level that is either intranet or cluster
+# This works but I think its duplicated in 
 violations[msg] {
   servicePod := servicePods[_]
   service := servicePod.service
@@ -40,7 +41,7 @@ violations[msg] {
   service.annotations.exposure == "internet"
   pod.annotations.exposure != "internet"
 
-  msg := sprintf("Services with an exposure level of %s must not point to pods that have an exposure level of %s service=%s/%s pod=%s/%s", [service.annotations.exposure, pod.annotations.exposure, service.namespace, service.name, pod.namespace, pod.name])
+  msg := sprintf("Services with an exposure level of '%s' must not point to pods that have an exposure level of '%s' service=%s/%s pod=%s/%s", [service.annotations.exposure, pod.annotations.exposure, service.namespace, service.name, pod.namespace, pod.name])
 }
 
 # This detects services that have an exposure level of intranet but point to pods with an exposure level that is cluster
