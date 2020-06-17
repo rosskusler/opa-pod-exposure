@@ -30,7 +30,6 @@
       "name": "svc_public_app_1",
       "namespace": "public_app",
       "type": "ClusterIP",
-      "externalIP": "50.50.50.50",
       "selector": {
         "app": "public_app_1"
       },
@@ -43,7 +42,6 @@
       "name": "svc_private_app_1",
       "namespace": "private_app",
       "type": "ClusterIP",
-      "externalIP": "192.168.0.200",
       "selector": {
         "app": "private_app_1"
       },
@@ -106,13 +104,37 @@
       "name": "ingress_for_public_app",
       "namespace": "public_app",
       "ingressClass": "public_facing",
-      "serviceName": "svc_public_app_1"
+      "serviceName": "svc_public_app_1",
+      "hostnames": {
+        "public.mycorp.com": "99.99.99.99",
+	"thishappenstobeprivate.domain.local": "10.99.99.99"
+      },
+      "annotations": {
+        "exposure": "internet"
+      }
     },
+
+    {
+      "name": "ingress_for_public_app2",
+      "namespace": "public_app",
+      "ingressClass": "public_facing",
+      "serviceName": "svc_public_app_1",
+      "hostnames": {
+        "public2.mycorp.com": "99.99.99.99"
+      },
+      "annotations": {
+        "exposure": "internet"
+      }
+    },
+
     {
       "name": "ingress_for_private_app",
       "namespace": "private_app",
       "ingressClass": "private_facing",
-      "serviceName": "svc_private_app_1"
+      "serviceName": "svc_private_app_1",
+      "hostnames": {
+        "private.mycorp.com": "192.168.99.99"
+      }
     }
   ]
 }
