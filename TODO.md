@@ -1,8 +1,8 @@
-** List of things to improve about this 
+List of things to improve about this 
 
-Add tests!!!
+* Add tests!!!
 
-True the schema up to what actual Services/Pods/Ingress look like.  For instance, how do we get the ingressClass from an Ingress controller? This is probably ingress controller specific but we could code something up that extracts the default ingress class from the nginx-ingress controller.  In other cases we could require that the ingress class is specified as an annotation.  Also I dont think the ingress hostname list is named correctly
+* True the schema up to what actual Services/Pods/Ingress look like.  For instance, how do we get the ingressClass from an Ingress controller? This is probably ingress controller specific but we could code something up that extracts the default ingress class from the nginx-ingress controller.  In other cases we could require that the ingress class is specified as an annotation.  Also I dont think the ingress hostname list is named correctly
 
 * Get the logic for determining which ingress controller has a hostname resolving to a public IP working properly
 
