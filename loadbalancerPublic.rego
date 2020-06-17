@@ -1,11 +1,6 @@
 package exposure
 
-# Currently we ignore ClusterIP and NodePort services that point to ingress controllers.. what are the implications of this?
-# TODO: we need better matching of selectors to labels.. right now we only have equality
-# TODO: add support for multiple exposure levels (internet, intranet, and cluster)
-# TODO: add support for services that point directly to pods (via deployments/daemonsets/statefulsets, etc) but we can just match the service selector to the pods
-# TODO: true the schema up to what actual Services/Pods/Ingress look like.  How to actually express an IGC?  How to get the ingressClass from an Ingress controller? or do we even need to?
-# TODO: add test
+# We check for LoadBalancers with public IPs that have the exposure level set to anything other than internet
 
 loadBalancerService[service] {
   service := servicesWithExposureLevel[_]
@@ -15,7 +10,7 @@ loadBalancerService[service] {
 
 loadBalancerServiceWithPrivateIP[service] {
   service := loadBalancerService[_]
-  private_subnets := data.rfc1819_subnets[_]
+  private_subnets := data.rfc1819Subnets[_]
   net.cidr_contains(private_subnets, service.externalIP)
 }
 

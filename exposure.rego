@@ -1,11 +1,5 @@
 package exposure
 
-# The ONLY allowed exposure level for LoadBalancer services with a public IP is internet (firewalls could restrict access but things should only have a public IP for they are intended to be reached publically)
-
-# TODO: check for LoadBalancers with public IPs that have the exposure level set to anything other than internet.. its an obvious violation
-
-# In the real world the ingress controll pods dont have an ingressClass object, AFAIK.. it's kind of contrived here
-
 # This rule is used to join Services to their target Pods based on label selectors
 servicePodMaps[servicePodMap] {
   service := servicesWithExposureLevel[_]
